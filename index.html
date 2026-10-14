@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>114－115年度 USR 活動成果</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="usr-page">
+
+        <!-- 頁首：英文在上、中文在下，圖標與標題垂直置中 -->
+        <header class="usr-header">
+            <img
+                src="usr-logo.png"
+                alt="USR 大學社會責任標章"
+                class="usr-logo"
+            >
+
+            <div class="header-content">
+                <p class="english-title">
+                    UNIVERSITY SOCIAL RESPONSIBILITY
+                </p>
+                <h1 id="year-title">115年度 USR 活動成果</h1>
+            </div>
+        </header>
+
+        <!-- 六項成果統計 -->
+        <section
+            class="stats-grid"
+            id="stats"
+            aria-label="USR 活動成果統計"
+        ></section>
+
+        <!-- 頁尾 -->
+        <footer class="usr-footer">
+            USR 大學社會責任活動成果
+        </footer>
+
+    </main>
+
+    <script>
+        const yearlyData = [
+            {
+                year: "115",
+                items: [
+                    { label: "校內學生", value: 701, image: "校內學生.png" },
+                    { label: "教職員（跨域）", value: 570, image: "教職員(跨域).png" },
+                    { label: "跨校師生", value: 897, image: "跨校師生.png" },
+                    { label: "場域夥伴", value: 558, image: "場域夥伴.png" },
+                    { label: "中央地方與其他", value: 33, image: "中央地方與其他.png" },
+                    { label: "SROI", value: 2.24, image: "SROI.png" }
+                ]
+            },
+            {
+                year: "114",
+                items: [
+                    { label: "校內學生", value: 983, image: "校內學生.png" },
+                    { label: "教職員（跨域）", value: 351, image: "教職員(跨域).png" },
+                    { label: "跨校師生", value: 708, image: "跨校師生.png" },
+                    { label: "場域夥伴", value: 602, image: "場域夥伴.png" },
+                    { label: "中央地方與其他", value: 229, image: "中央地方與其他.png" },
+                    { label: "SROI", value: 2.34, image: "SROI.png" }
+                ]
+            }
+        ];
+
+        const stats = document.getElementById("stats");
+        const title = document.getElementById("year-title");
+
+        let currentYear = 0;
+        const animationTokens = [];
+
+        // 建立卡片一次，年度切換時不重新建立圖片或名稱
+        function createCards() {
+            yearlyData[0].items.forEach(function(item, index) {
+                const card = document.createElement("article");
+                card.className = "stat-card";
+
+                const image = document.createElement("img");
+                image.className = "stat-image";
+                image.src = item.image;
+                image.alt = item.label + "插圖";
+
+                image.onerror = function() {
+                    console.warn("請確認圖片檔名：" + item.image);
+                };
+
+                const content = document.createElement("div");
+                content.className = "stat-content";
+
+                const number = document.createElement("div");
+                number.className = "stat-number";
+                number.id = "number-" + index;
+                number.textContent = "0";
+
+                const divider = document.createElement("div");
+                divider.className = "number-divider";
+
+                const label = document.createElement("div");
+                label.className = "stat-label";
+                label.textContent = item.label;
+
+                content.appendChild(number);
+                content.appendChild(divider);
+                content.appendChild(label);
+
+                card.appendChild(image);
+                card.appendChild(content);
+                stats.appendChild(card);
+            });
+        }
+
+        // 數字快速跳動，最後停在正確數值
+        function animateNumber(element, target, index) {
+            animationTokens[index] = (animationTokens[index] || 0) + 1;
+            const token = animationTokens[index];
+
+            const decimals = Number.isInteger(target) ? 0 : 2;
+            const duration = 900;
+            const startTime = performance.now();
+
+            function update(now) {
+                if (animationTokens[index] !== token) return;
+
+                const progress = Math.min(
+                    (now - startTime) / duration,
+                    1
+                );
+
+                if (progress < 1) {
+                    const randomFactor = 1 - progress;
+                    const randomValue =
+                        target * (1 - progress) +
+                        Math.random() * Math.max(10, target * randomFactor);
+
+                    const displayedValue = Math.max(
+                        0,
+                        Math.round(randomValue * (10 ** decimals)) /
+                        (10 ** decimals)
+                    );
+
+                    element.textContent = displayedValue.toLocaleString(
+                        "zh-TW",
+                        {
+                            minimumFractionDigits: decimals,
+                            maximumFractionDigits: decimals
+                        }
+                    );
+
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = target.toLocaleString("zh-TW", {
+                        minimumFractionDigits: decimals,
+                        maximumFractionDigits: decimals
+                    });
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // 只更新主標題和數字
+        function showYear(index) {
+            const data = yearlyData[index];
+
+            title.textContent = data.year + "年度 USR 活動成果";
+
+            data.items.forEach(function(item, itemIndex) {
+                const number = document.getElementById(
+                    "number-" + itemIndex
+                );
+
+                animateNumber(number, item.value, itemIndex);
+            });
+        }
+
+        function startRotation() {
+            createCards();
+            showYear(currentYear);
+
+            // 每 2.5 秒切換一次年度
+            setInterval(function() {
+                currentYear = (currentYear + 1) % yearlyData.length;
+                showYear(currentYear);
+            }, 2500);
+        }
+
+        startRotation();
+    </script>
+</body>
+</html>

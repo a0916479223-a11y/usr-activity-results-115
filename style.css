@@ -1,0 +1,311 @@
+
+/* ================================
+   1. 全站基本設定
+================================ */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    background: #edf4e7;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #23472b;
+    background: #edf4e7;
+    font-family: "DFKai-SB", "BiauKai", "標楷體", serif;
+}
+
+/* ================================
+   2. 整體版面
+================================ */
+.usr-page {
+    width: 100%;
+    max-width: 1500px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 28px 3.5% 18px;
+}
+
+/* ================================
+   3. 頁首
+================================ */
+.usr-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 0 auto 28px;
+}
+
+.usr-logo {
+    display: block;
+    flex: 0 0 100px;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    text-align: center;
+}
+
+/* 英文小標題：放在中文上面 */
+.english-title {
+    margin: 0 0 3px;
+    color: #698660;
+    font-family: Arial, sans-serif;
+    font-size: clamp(10px, 1.05vw, 13px);
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* 中文主標題 */
+.usr-header h1 {
+    margin: 0;
+    color: #23472b;
+    font-family: "DFKai-SB", "BiauKai", "標楷體", serif;
+    font-size: clamp(34px, 3.6vw, 48px);
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.35;
+    text-align: center;
+}
+
+/* ================================
+   4. 六張成果卡片
+================================ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    width: 100%;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-width: 0;
+    min-height: 190px;
+    padding: 12px 5px;
+    background: #ffffff;
+    border: 1px solid #e0ead9;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(40, 70, 35, 0.09);
+}
+
+/* ================================
+   5. 插圖
+   圖片區域加寬，向卡片中間靠近
+================================ */
+.stat-image {
+    display: block;
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 155px;
+    height: 145px;
+    margin-right: -10px;
+    object-fit: contain;
+    object-position: center;
+    transform: translateX(19px);
+}
+/* ================================
+   6. 數字與名稱
+================================ */
+.stat-content {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 0 2px;
+    text-align: center;
+}
+
+.stat-number {
+    width: 100%;
+    color: #2e7028;
+    font-family: "DFKai-SB", "BiauKai", "標楷體", serif;
+    font-size: clamp(32px, 3vw, 44px);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+}
+
+.number-divider {
+    width: 72%;
+    max-width: 120px;
+    height: 2px;
+    margin: 8px auto;
+    background: #a4c98e;
+    border-radius: 2px;
+}
+
+.stat-label {
+    width: 100%;
+    color: #252d25;
+    font-family: "DFKai-SB", "BiauKai", "標楷體", serif;
+    font-size: clamp(18px, 1.65vw, 23px);
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* ================================
+   7. 底部文字
+================================ */
+.usr-footer {
+    margin-top: 24px;
+    color: #526b4a;
+    font-family: "DFKai-SB", "BiauKai", "標楷體", serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* ================================
+   8. 平板與中型螢幕
+================================ */
+@media (max-width: 1000px) {
+    .usr-page {
+        padding: 24px 3% 18px;
+    }
+
+    .usr-header {
+        gap: 15px;
+        margin-bottom: 24px;
+    }
+
+    .usr-logo {
+        flex-basis: 85px;
+        width: 85px;
+        height: 85px;
+    }
+
+    .english-title {
+        font-size: 10px;
+        letter-spacing: 1.4px;
+    }
+
+    .usr-header h1 {
+        font-size: clamp(30px, 4vw, 40px);
+    }
+
+    .stats-grid {
+        gap: 13px;
+    }
+
+    .stat-card {
+        min-height: 165px;
+        padding: 10px 4px;
+    }
+
+    .stat-image {
+        flex-basis: 48%;
+        width: 48%;
+        height: 115px;
+        margin-right: -7px;
+    }
+
+    .stat-number {
+        font-size: clamp(28px, 3.4vw, 36px);
+    }
+
+    .stat-label {
+        font-size: 17px;
+    }
+}
+
+/* ================================
+   9. 手機版
+================================ */
+@media (max-width: 600px) {
+    .usr-page {
+        padding: 20px 12px 15px;
+    }
+
+    .usr-header {
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .usr-logo {
+        flex-basis: 65px;
+        width: 65px;
+        height: 65px;
+    }
+
+    .english-title {
+        margin-bottom: 3px;
+        font-size: 8px;
+        letter-spacing: 0.8px;
+        line-height: 1.5;
+    }
+
+    .usr-header h1 {
+        font-size: clamp(25px, 6vw, 32px);
+        letter-spacing: 1px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        flex-direction: column;
+        gap: 3px;
+        min-height: 175px;
+        padding: 10px 5px;
+        border-radius: 13px;
+    }
+
+    .stat-image {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 105px;
+        height: 82px;
+        margin-right: 0;
+    }
+
+    .stat-content {
+        flex: 0 0 auto;
+        width: 100%;
+        padding: 0 2px;
+    }
+
+    .stat-number {
+        font-size: clamp(26px, 7vw, 34px);
+    }
+
+    .number-divider {
+        margin: 5px auto;
+    }
+
+    .stat-label {
+        font-size: clamp(15px, 3.8vw, 18px);
+        line-height: 1.4;
+    }
+
+    .usr-footer {
+        margin-top: 20px;
+        font-size: 13px;
+    }
+}
